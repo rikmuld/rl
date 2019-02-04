@@ -5,8 +5,6 @@ from typing import Dict, Any
 
 
 def evaluate_policy(policy: Policy, mdp: MDP, gamma=0.9, delta=0.05, printit: bool = False) -> Dict[Any, float]:
-    """Approximates the states values of the policy"""
-
     def update_policy(s, V, EG):
         if is_det_policy(policy):
             V[s] = EG(policy(s))
@@ -17,8 +15,6 @@ def evaluate_policy(policy: Policy, mdp: MDP, gamma=0.9, delta=0.05, printit: bo
 
 
 def value_iteration(mdp: MDP, gamma: float = 0.9, printit: bool = False, delta: float = 0.05) -> Policy:
-    """Approximates the optimal states values"""
-
     def update_policy(s, V, EG):
         V[s] = max([EG(a) for a in mdp.actions])
 

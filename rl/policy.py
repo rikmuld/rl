@@ -1,5 +1,8 @@
+import random
+
 from typing import NewType, Dict, Callable, Union, Any, List
 from inspect import signature
+from rl.utils.rand import arg_sample
 
 
 Policy = NewType("Policy", Union[Callable[[int, Any], float], Callable[[Any], int]])
@@ -11,6 +14,13 @@ def is_det_policy(policy: Policy):
 
 def is_stoch_policy(policy: Policy):
     return not is_det_policy(policy)
+
+
+def sample_action(policy: Policy, state: Any, actions: List[int] = None):
+    if is_det_policy(policy):
+        return policy(state)
+    else:
+        return arg_sample([policy(a, state) for a in actions])
 
 
 # pinch eyes and say namespace
